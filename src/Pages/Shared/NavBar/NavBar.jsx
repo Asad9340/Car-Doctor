@@ -1,11 +1,12 @@
 import logo from '../../../../src/assets/logo.svg';
 import { CiSearch } from 'react-icons/ci';
 import { SlHandbag } from 'react-icons/sl';
+import { Link } from 'react-router-dom';
 function NavBar() {
   const navItem = (
     <>
       <li>
-        <a>Home</a>
+        <Link to='/'>Home</Link>
       </li>
       <li>
         <a>About</a>
@@ -59,7 +60,7 @@ function NavBar() {
             </a>
           </div>
           <div className="navbar-center hidden lg:flex">
-            <ul className="menu menu-horizontal px-1">{navItem}</ul>
+            <ul className="menu menu-horizontal px-1 gap-3">{navItem}</ul>
           </div>
           <div className="navbar-end flex gap-6 text-xl items-center">
             <p className="hidden md:block">
