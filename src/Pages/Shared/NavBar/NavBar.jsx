@@ -1,12 +1,21 @@
+import { useContext } from 'react';
 import logo from '../../../../src/assets/logo.svg';
 import { CiSearch } from 'react-icons/ci';
 import { SlHandbag } from 'react-icons/sl';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../../firebase/AuthProvider';
 function NavBar() {
+  const navigate = useNavigate();
+  const { user, logOut } = useContext(AuthContext);
+  const handleLogOut = () => {
+    logOut();
+    navigate('/');
+  };
+
   const navItem = (
     <>
       <li>
-        <Link to='/'>Home</Link>
+        <Link to="/">Home</Link>
       </li>
       <li>
         <a>About</a>
@@ -56,13 +65,53 @@ function NavBar() {
               </ul>
             </div>
             <a className=" text-xl">
-              <img className='w-20' src={logo} alt="" />
+              <img className="w-20" src={logo} alt="" />
             </a>
           </div>
           <div className="navbar-center hidden lg:flex">
             <ul className="menu menu-horizontal px-1 gap-3">{navItem}</ul>
           </div>
           <div className="navbar-end flex gap-6 text-xl items-center">
+            {user ? (
+              <div className="dropdown dropdown-end">
+                <div
+                  tabIndex={0}
+                  role="button"
+                  className="btn btn-ghost btn-circle avatar"
+                >
+                  <div className="w-10 rounded-full">
+                    <img
+                      alt="Tailwind CSS Navbar component"
+                      src={
+                        user?.photoURL
+                          ? user.photoURL
+                          : 'https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg'
+                      }
+                    />
+                  </div>
+                </div>
+                <ul
+                  tabIndex={0}
+                  className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+                >
+                  <li>
+                    <a className="justify-between">
+                      Profile
+                      <span className="badge">New</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a onClick={handleLogOut}>Logout</a>
+                  </li>
+                </ul>
+              </div>
+            ) : (
+              <Link to="/signIn">
+                <button className="border px-4 py-2 rounded-md text-white font-semibold bg-[#FF3811]">
+                  Sign In
+                </button>
+              </Link>
+            )}
             <p className="hidden md:block">
               <SlHandbag />
             </p>

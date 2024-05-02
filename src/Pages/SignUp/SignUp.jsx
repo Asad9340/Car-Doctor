@@ -1,16 +1,43 @@
-
+import { useContext, useState } from 'react';
 import logIn from '../../assets/images/login/login.svg';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../firebase/AuthProvider';
+import toast from 'react-hot-toast';
 
 function SignUp() {
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+  const { createUser, updateUserProfile, setUser } = useContext(AuthContext);
   const handleSubmit = e => {
     e.preventDefault();
     const form = e.target;
     const name = form.name.value;
     const email = form.email.value;
     const password = form.password.value;
-    const user = { name,email, password };
-    console.log(user);
+    setError('');
+    if (password.length < 6) {
+      setError('Password must be at least 6 characters');
+      return;
+    }
+    if (!/[A-Z]/.test(password)) {
+      setError('Password must contain Uppercase letter');
+      return;
+    }
+    if (!/[a-z]/.test(password)) {
+      setError('Password must contain Lowercase letter');
+      return;
+    }
+    createUser(email, password)
+      .then(result => {
+        updateUserProfile(name)
+          .then(() => {
+            setUser(result.user);
+            toast.success('Successfully Created Account!');
+            navigate('/');
+          })
+          .catch(err => console.log(err));
+      })
+      .catch(error => console.log(error.message));
   };
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 p-4 lg:p-8">
@@ -18,7 +45,9 @@ function SignUp() {
         <img src={logIn} alt="" />
       </div>
       <div className="border rounded-lg p-4">
-        <h2 className="text-center text-3xl font-bold lg:text-4xl -mt-2">Sign Up</h2>
+        <h2 className="text-center text-3xl font-bold lg:text-4xl -mt-2">
+          Sign Up
+        </h2>
         <form onSubmit={handleSubmit} className="card-body -mt-4">
           <div className="form-control">
             <label className="label">
@@ -61,6 +90,9 @@ function SignUp() {
               </a>
             </label>
           </div>
+          <p className="text-red-700">
+            <small>{error ? error : ''}</small>
+          </p>
           <div className="form-control mt-6">
             <button type="submit" className="btn btn-primary">
               Sign Up
@@ -78,5 +110,4 @@ function SignUp() {
   );
 }
 
-
-export default SignUp
+export default SignUp;
