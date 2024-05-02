@@ -7,7 +7,7 @@ import image6 from '../../../assets/images/banner/6.jpg';
 function Banner() {
   return (
     <div className='mt-8 md:mt-12'>
-      <div className="carousel w-full h-[650px]">
+      <div className="carousel w-full h-[400px] lg:h-[650px]">
         <div id="slide1" className="carousel-item relative w-full">
           <img
             src={image5}
