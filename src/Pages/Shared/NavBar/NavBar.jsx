@@ -1,3 +1,4 @@
+import logo from '../../../../src/assets/logo.svg';
 import { CiSearch } from 'react-icons/ci';
 import { SlHandbag } from 'react-icons/sl';
 function NavBar() {
@@ -53,7 +54,9 @@ function NavBar() {
                 {navItem}
               </ul>
             </div>
-            <a className="btn btn-ghost text-xl">daisyUI</a>
+            <a className=" text-xl">
+              <img className='w-20' src={logo} alt="" />
+            </a>
           </div>
           <div className="navbar-center hidden lg:flex">
             <ul className="menu menu-horizontal px-1">{navItem}</ul>
