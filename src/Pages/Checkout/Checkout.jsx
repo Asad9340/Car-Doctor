@@ -1,8 +1,42 @@
 import { useLoaderData } from "react-router-dom"
 import image from '../../assets/images/checkout/checkout.png'
+import { useContext } from "react";
+import { AuthContext } from "../../firebase/AuthProvider";
 function Checkout() {
   const checkoutData = useLoaderData();
-  console.log(checkoutData);
+  const {_id, price,title,img } = checkoutData;
+  const { user } = useContext(AuthContext);
+  const handleBookService = (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const name = form.name.value;
+    const date = form.date.value;
+    const email = form.email.value;
+    const due = form.due.value;
+    const description = form.description.value;
+    const bookService = {
+      customerName: name,
+      date,
+      image: img,
+      customerEmail: email,
+      price: due,
+      service_id: _id,
+      service:title,
+      description,
+
+    };
+    console.log(bookService);
+    fetch('http://localhost:5000/bookings', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify(bookService),
+    })
+      .then(res => res.json())
+      .then(data => console.log(data));
+
+  }
   return (
     <div className="my-10 md:my-12 lg:my-14">
       <div className="flex justify-center relative ">
@@ -14,28 +48,29 @@ function Checkout() {
         </div>
       </div>
       <div>
-        <form className="card-body">
+        <form onSubmit={handleBookService} className="card-body">
           <div className="grid gap-6 grid-cols-1 md:grid-cols-2">
             <div className="form-control">
               <label className="label">
-                <span className="label-text">First Name</span>
+                <span className="label-text">Name</span>
               </label>
               <input
                 type="text"
-                name="firstName"
-                placeholder="Your First Name"
+                name="name"
+                defaultValue={user?.displayName}
+                placeholder="Your Name"
                 className="input input-bordered"
                 required
               />
             </div>
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Last Name</span>
+                <span className="label-text">Date</span>
               </label>
               <input
-                type="text"
-                name="lastName"
-                placeholder="Your Last Name"
+                type="date"
+                name="date"
+                placeholder="Date"
                 className="input input-bordered"
                 required
               />
@@ -44,21 +79,25 @@ function Checkout() {
           <div className="grid gap-6 grid-cols-1 md:grid-cols-2">
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Mobile</span>
+                <span className="label-text">Email</span>
               </label>
               <input
-                type="number"
-                placeholder="Your Mobile Number"
+                type="Email"
+                name="email"
+                defaultValue={user?.email}
+                placeholder="Your Email Address"
                 className="input input-bordered"
                 required
               />
             </div>
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Password</span>
+                <span className="label-text">Due Amount</span>
               </label>
               <input
-                type="email"
+                type="text"
+                name="due"
+                defaultValue={`$${price}`}
                 placeholder="Your Email"
                 className="input input-bordered"
                 required
@@ -70,12 +109,18 @@ function Checkout() {
               <span className="label-text">Your Message</span>
             </label>
             <textarea
+              name="description"
               placeholder="Bio"
               className="textarea textarea-bordered textarea-lg w-full"
             ></textarea>
           </div>
           <div className="form-control mt-6">
-            <button className="btn text-white hover:text-black bg-[#FF3811]">Login</button>
+            <button
+              type="submit"
+              className="btn text-white hover:text-black bg-[#FF3811]"
+            >
+              Confirm Order
+            </button>
           </div>
         </form>
       </div>
