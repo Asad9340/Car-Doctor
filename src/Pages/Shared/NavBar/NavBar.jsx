@@ -97,7 +97,6 @@ function NavBar() {
                   <li>
                     <a className="justify-between">
                       Profile
-                      <span className="badge">New</span>
                     </a>
                   </li>
                   <li>
@@ -112,9 +111,6 @@ function NavBar() {
                 </button>
               </Link>
             )}
-            <p className="hidden md:block">
-              <SlHandbag />
-            </p>
             <p className="hidden md:block">
               <CiSearch />
             </p>

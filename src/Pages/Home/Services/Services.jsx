@@ -11,7 +11,7 @@ function Services() {
     })()
   },[])
   return (
-    <div className="mt-24 md:mt-32">
+    <div className="mt-20">
       <div className="space-y-3">
         <h4 className="text-[#FF3811] font-semibold text-center">Services</h4>
         <h2 className="text-3xl md:text-4xl lg:text-5xl text-center font-semibold lg:font-bold text-[#151515]">
