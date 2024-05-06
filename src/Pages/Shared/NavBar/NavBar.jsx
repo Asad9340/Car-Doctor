@@ -18,10 +18,10 @@ function NavBar() {
         <Link to="/">Home</Link>
       </li>
       <li>
-        <a>About</a>
+        <Link to='/about'>About</Link>
       </li>
       <li>
-        <a>Service</a>
+        <Link to='/services'>Service</Link>
       </li>
       <li>
         <a>Blog</a>

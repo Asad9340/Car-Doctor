@@ -6,6 +6,8 @@ import SignUp from "../Pages/SignUp/SignUp";
 import Error from "../Pages/Error/Error";
 import Checkout from "../Pages/Checkout/Checkout";
 import PrivateRoute from "./PrivateRoute";
+import About from "../Pages/Home/About/About";
+import Services from "../Pages/Home/Services/Services";
 const router = createBrowserRouter([
   {
     path: '/',
@@ -23,6 +25,14 @@ const router = createBrowserRouter([
       {
         path: '/signUp',
         element: <SignUp />,
+      },
+      {
+        path: '/about',
+        element: <About/>
+      },
+      {
+        path: '/services',
+        element: <Services/>
       },
       {
         path: '/service/:id',
