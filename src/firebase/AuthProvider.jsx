@@ -10,6 +10,7 @@ import {
 import { createContext, useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import auth from './firebase.config';
+import axios from 'axios';
 
 export const AuthContext = createContext();
 const googleProvider = new GoogleAuthProvider();
@@ -57,12 +58,25 @@ function AuthProvider({ children }) {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, currentUser => {
+      const userEmail = currentUser?.email || user?.email;
+      const loggedUser = { email: userEmail };
       setUser(currentUser);
       setLoading(false);
+      if (currentUser) {
+        axios
+          .post('http://localhost:5000/jwt', loggedUser, { withCredentials: true })
+          .then(res => {
+            console.log('Value', res.data);
+          });
+      }
+      else {
+        axios.post('http://localhost:5000/logout', loggedUser, { withCredentials: true })
+        .then(res=>console.log('Logout', res.data));
+      }
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [user?.email]);
 
   const userInfo = {
     googleLogin,

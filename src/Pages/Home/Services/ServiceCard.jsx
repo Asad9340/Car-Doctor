@@ -1,7 +1,6 @@
 import { FaArrowRight } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 function ServiceCard({ service }) {
-  console.log(service._id);
   const { _id,img, title, price } = service;
   return (
     <div className="space-y-3 border p-3 md:p-4 rounded-xl">
