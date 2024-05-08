@@ -8,6 +8,7 @@ import Checkout from "../Pages/Checkout/Checkout";
 import PrivateRoute from "./PrivateRoute";
 import About from "../Pages/Home/About/About";
 import Services from "../Pages/Home/Services/Services";
+import CartDetails from "../components/CartDetails/CartDetails";
 const router = createBrowserRouter([
   {
     path: '/',
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
       {
         path: '/services',
         element: <Services/>
+      },
+      {
+        path: '/cart-details',
+        element: <CartDetails/>,
       },
       {
         path: '/service/:id',
